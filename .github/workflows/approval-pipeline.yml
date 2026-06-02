@@ -39,8 +39,8 @@ jobs:
     environment: production-approval
     steps:
       - name: Run on prodcution-approval
-      run: |
-       echo "Running production approval..."
+        run: |
+          echo "Running production approval..."
   # TODO: Add an 'approve-production' job
   # - needs: test-staging
   # - environment: production-approval (with required reviewer + wait timer)
