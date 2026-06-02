@@ -18,6 +18,7 @@ jobs:
   deploy-staging:
     needs: build
     runs-on: ubuntu-latest
+    environment: staging
     # TODO: Add environment 'staging' (no protection rules — auto deploy)
     steps:
       - name: Deploy to staging
@@ -32,6 +33,14 @@ jobs:
           echo "Running smoke tests..."
           echo "All tests passed"
 
+  approve-production:
+    needs: test-staging
+    runs-on: ubuntu-latest
+    environment: production-approval
+    steps:
+      - name: Run on prodcution-approval
+      run: |
+       echo "Running production approval..."
   # TODO: Add an 'approve-production' job
   # - needs: test-staging
   # - environment: production-approval (with required reviewer + wait timer)
@@ -39,8 +48,9 @@ jobs:
 
   deploy-production:
     # TODO: Change needs to approve-production
-    needs: test-staging
+    needs: approve-production
     runs-on: ubuntu-latest
+    environment: production
     # TODO: Add environment 'production' with URL
     steps:
       - name: Deploy to production
